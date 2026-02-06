@@ -40,6 +40,9 @@ admission bot/
 └── templates/
     └── index.html             # React-like chat interface (650+ lines)
 ```
+### Demo
+https://github.com/user-attachments/assets/52f3e839-a39c-4ef7-aa67-1674be5126fa
+---
 
 ### Project Structure Details
 
@@ -68,7 +71,8 @@ admission bot/
 ### Prerequisites
 - Python 3.8 or higher
 - Ollama installed and running
-- Modern web browser (Chrome, Firefox, Safari, Edge)
+- Modern web browser (Chrome, Firefox, Safari, Edge)<img width="64" height="64" alt="download" src="https://github.com/user-attachments/assets/ce7aa2e4-b548-4f60-abe3-d9d788a23672" />
+
 - ~5GB disk space for Ollama model
 
 ### Installation
