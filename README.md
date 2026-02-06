@@ -42,7 +42,7 @@ admission bot/
 ```
 ### Demo
 
-https://github.com/user-attachments/assets/52f3e839-a39c-4ef7-aa67-1674be5126fa 
+https://github.com/user-attachments/assets/26111b5a-4319-4b5c-96e3-8d4bbe73f9d7
 
 
 ### Project Structure Details
