@@ -41,8 +41,9 @@ admission bot/
     └── index.html             # React-like chat interface (650+ lines)
 ```
 ### Demo
-https://github.com/user-attachments/assets/52f3e839-a39c-4ef7-aa67-1674be5126fa
----
+
+https://github.com/user-attachments/assets/52f3e839-a39c-4ef7-aa67-1674be5126fa 
+
 
 ### Project Structure Details
 
