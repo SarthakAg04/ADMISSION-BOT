@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Admissions Bot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .chat-app {
+            width: 480px;
+            max-width: 100%;
+            height: 720px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 20px;
+            font-weight: 700;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header span {
+            font-size: 28px;
+        }
+
+        .suggestions-section {
+            padding: 16px;
+            background: linear-gradient(135deg, #f5f7ff 0%, #faf8ff 100%);
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .suggestions-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #667eea;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .suggestions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .suggestion-btn {
+            background: #fff;
+            border: 1.5px solid #d1d5db;
+            border-radius: 12px;
+            padding: 12px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #374151;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .suggestion-emoji {
+            font-size: 20px;
+        }
+
+        .suggestion-text {
+            font-size: 12px;
+            line-height: 1.2;
+        }
+
+        .suggestion-btn:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 16px;
+            background: #ffffff;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+            animation: slideUp 0.3s ease;
+        }
+
+        .user {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        .bot {
+            background: #f3f4f6;
+            color: #111827;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .typing {
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        .chat-input {
+            padding: 12px 16px;
+            display: flex;
+            gap: 10px;
+            border-top: 2px solid #e5e7eb;
+            background: #ffffff;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 25px;
+            border: 2px solid #e5e7eb;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .chat-input input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .chat-input button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 24px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .chat-input button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .chat-input button:active {
+            transform: translateY(0);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile full screen */
+        @media (max-width: 480px) {
+            body {
+                align-items: stretch;
+            }
+
+            .chat-app {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
+
+        /* Scrollbar styling */
+        .chat-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-body::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-app">
+    <div class="chat-header">
+        🎓 University Admissions Bot
+    </div>
+
+    <div class="suggestions-section">
+        <p class="suggestions-title">✨ Quick Questions</p>
+        <div class="suggestions" id="suggestions"></div>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+        <div class="message bot">
+            👋 Hi! I'm here to help with your university admission questions. Tap any question below or type your own!
+        </div>
+    </div>
+
+    <div class="chat-input">
+        <input 
+            type="text" 
+            id="question" 
+            placeholder="Ask me anything..."
+        />
+        <button onclick="askBot()">Send</button>
+    </div>
+</div>
+
+<script>
+    const chatBody = document.getElementById("chatBody");
+    const input = document.getElementById("question");
+    const suggestionsDiv = document.getElementById("suggestions");
+
+    // Load and display suggestions
+    function loadSuggestions() {
+        fetch("/suggestions")
+            .then(res => res.json())
+            .then(data => {
+                suggestionsDiv.innerHTML = data.suggestions
+                    .map(s => `<button class="suggestion-btn" onclick="askQuestion('${s.text}')"><div class="suggestion-emoji">${s.emoji}</div><div class="suggestion-text">${s.text}</div></button>`)
+                    .join("");
+            })
+            .catch(err => console.error("Failed to load suggestions:", err));
+    }
+
+    function addMessage(text, className) {
+        const msg = document.createElement("div");
+        msg.className = "message " + className;
+        msg.innerText = text;
+        chatBody.appendChild(msg);
+        chatBody.scrollTop = chatBody.scrollHeight;
+        return msg;
+    }
+
+    function askQuestion(question) {
+        if (!question) return;
+        input.value = question;
+        askBot();
+    }
+
+    function askBot() {
+        const question = input.value.trim();
+        if (!question) return;
+
+        addMessage(question, "user");
+        input.value = "";
+
+        const typingMsg = addMessage("⏳ Getting answer...", "bot typing");
+
+        fetch("/ask", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question })
+        })
+        .then(res => res.json())
+        .then(data => {
+            typingMsg.remove();
+            if (data.error) {
+                addMessage("❌ " + data.error, "bot");
+            } else {
+                addMessage(data.answer, "bot");
+            }
+        })
+        .catch(() => {
+            typingMsg.remove();
+            addMessage("❌ Connection error. Please try again.", "bot");
+        });
+    }
+
+    input.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            askBot();
+        }
+    });
+
+    // Load suggestions on page load
+    loadSuggestions();
+</script>
+
+</body>
+</html>
